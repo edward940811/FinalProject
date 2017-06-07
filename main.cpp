@@ -3,5 +3,7 @@
 using namespace std;
 int main()
 {
-  //BikeOps.NewBike(00000,0,0,0);
+  BikeOPs a;
+  char test[5] = {0,0,0,0,0};
+  BikePtr newbike =  a.NewBike(test,10000,Electric,Xinpu);
 }
