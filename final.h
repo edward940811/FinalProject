@@ -1,3 +1,6 @@
+#include<iostream>
+using namespace std;
+
 enum StatusType {Free, Rented};
 enum ClassType { Electric, Lady, Road, Hybrid};
 enum StationType {
@@ -14,12 +17,13 @@ struct BikeType
   ClassType Class;
   BikeType *left, *right;
   BikeType():Mileage(0),Cursor(0),left(NULL),right(NULL){}
-   BikeType(LicenseType license, int Mile, ClassType aclass, StationType Station)
+   BikeType(LicenseType license, int Mile, ClassType aclass, StationType station)
    {
-     //License = license;
+    for(int i=0; i<5 ;i++)
+    License[i] = license[i];
      Mileage = Mile;
      Class = aclass;
-     Station = Station;
+     Station = station;
      left = NULL;
      right = NULL;
    }
@@ -30,6 +34,8 @@ struct HeapType
 {
   BikePtr Elem[256]; /*use array to implement heap, and each node in the heap is a pointer*/
   int Number;
+  int currentbikes = 0;
+  int numberfortracing = 1;
 };
 struct Station
 {
@@ -64,7 +70,8 @@ class BikeOPs
     void BReport ();
     void Main ();
     //////Heap
-    void InsertHeap(BikePtr NewBike);
+    void InsertHeap(BikePtr NewBike , HeapType currentheap);
+    bool compare(LicenseType a, LicenseType b);
   private:
-    HeapType Bikes;
+    HeapType AllBikes;
 };
