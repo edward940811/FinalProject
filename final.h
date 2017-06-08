@@ -15,8 +15,7 @@ struct BikeType
   int Cursor; /* cursor to the entry in heap where there is a pointer to this node */
   StationType Station;
   ClassType Class;
-  BikeType *left, *right;
-  BikeType():Mileage(0),Cursor(0),left(NULL),right(NULL){}
+  BikeType():Mileage(0),Cursor(0){}
    BikeType(LicenseType license, int Mile, ClassType aclass, StationType station)
    {
     for(int i=0; i<5 ;i++)
@@ -24,8 +23,6 @@ struct BikeType
      Mileage = Mile;
      Class = aclass;
      Station = station;
-     left = NULL;
-     right = NULL;
    }
 };
 typedef struct BikeType *BikePtr;
@@ -48,11 +45,19 @@ struct Station
   int NumLady; /* number of lady bikes */
   int NumRoad; /* number of road bikes */
   int NumHybrid; /* number of hybrid bikes */
-  HeapType HRent;
-  HeapType HElectric;
-  HeapType HLady;
-  HeapType HRoad;
-  HeapType HHybrid;
+  HeapType *HRent;
+  HeapType *HElectric;
+  HeapType *HLady;
+  HeapType *HRoad;
+  HeapType *HHybrid;
+  Station():Net(0)
+  {
+    HRent = new HeapType;
+    HElectric = new HeapType;
+    HLady = new HeapType;
+    HRoad = new HeapType;
+    HHybrid = new HeapType;
+  }
 };
 class BikeOPs
 {
@@ -74,4 +79,17 @@ class BikeOPs
     bool compare(LicenseType a, LicenseType b);
 
     HeapType* AllBikes = new HeapType;
+    Station* AllStations = new Station [12]; //用數字代替站名
+    // Station* Danshui = new Station;
+    // Station* Beitou = new Station;
+    // Station* Zhongshan = new Station;
+    // Station* Xinpu = new Station;
+    // Station* Ximen = new Station;
+    // Station* Shilin = new Station;
+    // Station* Hongshulin = new Station;
+    // Station* Liuzhangli = new Station;
+    // Station* Muzha = new Station;
+    // Station* Gongguan = new Station;
+    // Station* Guting = new Station;
+    // Station* Jingmei = new Station;
 };
