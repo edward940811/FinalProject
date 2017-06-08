@@ -27,15 +27,15 @@ struct BikeType
      left = NULL;
      right = NULL;
    }
-  //                 License(License),Status(Free),Mileage(Mile),Cursor(0),Class(Class),Station(Station),left(NULL),right(NULL){}
 };
 typedef struct BikeType *BikePtr;
 struct HeapType
 {
   BikePtr Elem[256]; /*use array to implement heap, and each node in the heap is a pointer*/
   int Number;
-  int currentbikes = 0;
-  int numberfortracing = 1;
+  int currentbikes;
+  int numberfortracing;
+  HeapType():Number(0),currentbikes(0),numberfortracing(1){}
 };
 struct Station
 {
@@ -70,8 +70,8 @@ class BikeOPs
     void BReport ();
     void Main ();
     //////Heap
-    void InsertHeap(BikePtr NewBike , HeapType currentheap);
+    void InsertHeap(BikePtr NewBike , HeapType* currentheap);
     bool compare(LicenseType a, LicenseType b);
-  private:
-    HeapType AllBikes;
+
+    HeapType* AllBikes = new HeapType;
 };

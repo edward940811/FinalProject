@@ -11,7 +11,7 @@ BikePtr BikeOPs::NewBike ( LicenseType License, int Mile, ClassType Class, Stati
 }
 BikePtr BikeOPs::SearchBike(LicenseType License)
 {
-  ///SearchBike
+
 }
 bool BikeOPs::compare(LicenseType a, LicenseType b)
 {
@@ -23,28 +23,32 @@ bool BikeOPs::compare(LicenseType a, LicenseType b)
     return false;
   }
 }
-void BikeOPs::InsertHeap(BikePtr newbike, HeapType currentheap)
+void BikeOPs::InsertHeap(BikePtr newbike, HeapType* currentheap)
 {
-  if(currentheap.currentbikes == 0)
+  if(currentheap->currentbikes == 0)
   {
-    currentheap.Elem[1] = newbike;
-    currentheap.currentbikes++;
+    currentheap->Elem[1] = newbike;
+    currentheap->currentbikes++;
     return;
   }
-  if(currentheap.currentbikes < currentheap.numberfortracing)
+  if(currentheap->currentbikes < currentheap->numberfortracing)
   {
-    currentheap.Elem[currentheap.numberfortracing] = newbike;
-    currentheap.numberfortracing = 0;
+    currentheap->Elem[currentheap->numberfortracing] = newbike;
+    currentheap->numberfortracing = 0;
     return;
   }
-  if(compare(currentheap.Elem[currentheap.numberfortracing]->License,newbike->License)) //smaller
+  if(compare(currentheap->Elem[currentheap->numberfortracing]->License,newbike->License)) //smaller
   {
-    currentheap.numberfortracing *= 2;
+    currentheap->numberfortracing *= 2;
     InsertHeap(newbike,currentheap);
   }
-  if(!compare(currentheap.Elem[currentheap.numberfortracing]->License,newbike->License)) // larger
+  if(!compare(currentheap->Elem[currentheap->numberfortracing]->License,newbike->License)) // larger
   {
-    currentheap.numberfortracing = 2 * currentheap.numberfortracing + 1;
+    currentheap->numberfortracing = 2 * currentheap->numberfortracing + 1;
     InsertHeap(newbike,currentheap);
   }
+}
+void BikeOPs::UbikeReport()
+{
+  cout<<AllBikes->Elem[3]->License<<endl;
 }
