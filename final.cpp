@@ -85,3 +85,111 @@ void BikeOPs::UbikeReport()
 {
   cout<<AllBikes->Elem[3]->License<<endl;
 }
+void BikeOPs::Resort(HeapType* heap ,int deletednumber)
+{
+  //leaf
+  if(heap->Elem[2*deletednumber+1] == NULL && heap->Elem[2*deletednumber] == NULL)
+  return;
+  //nonleaf -- only rightchild
+  if(heap->Elem[2*deletednumber+1] != NULL && heap->Elem[2*deletednumber] == NULL)
+  {
+    ResortR(heap,deletednumber);
+  }
+  //have leftchild
+  if(heap->Elem[2*deletednumber] != NULL)
+  {
+    int i = deletednumber;
+    while(i <= heap->currentbikes)
+    {
+      if(heap->Elem[2*i+1] == NULL)
+      break;
+      if(heap->Elem[2*i+1] != NULL)
+      i = 2*i +1;
+    }
+    heap->Elem[deletednumber] = heap->Elem[i];
+  }
+}
+void BikeOPs::ResortR(HeapType* heap ,int deletednumber) //調整右子樹用 shift up
+{
+  heap->Elem[deletednumber] = heap->Elem[2*deletednumber+1];
+  cout<<heap->Elem[deletednumber]->License<<endl;
+  if(heap->Elem[2*deletednumber+1] == NULL && heap->Elem[2*deletednumber] == NULL)
+  return;
+
+  int k =2*deletednumber+1;
+  //left
+  if(heap->Elem[2*k] != NULL)
+  {
+    heap[2*deletednumber] = heap[2*k];
+    ResortR(heap,k);
+  }
+  //right
+  if(heap->Elem[2*k+1] != NULL)
+  {
+    heap[2*deletednumber+1] = heap[2*k+1];
+    ResortR(heap,k);
+  }
+}
+int BikeOPs::FindBikeInHeap(HeapType* heap,BikePtr Bike)
+{
+  int i=1;
+  while(i <= heap->currentbikes)
+  {
+    if(strcmp(heap->Elem[i]->License,Bike->License)==0)
+    return i;
+    if(compare(heap->Elem[i]->License,Bike->License))
+    i *= 2;
+    if(!compare(heap->Elem[i]->License,Bike->License))
+    i = i*2 +1;
+  }
+  return -1; // not located
+}
+int BikeOPs::JunkBikePtr(BikePtr Bike)
+{
+  int i = FindBikeInHeap(AllBikes,Bike); //return the array number storing the elem
+  if(i <= 0)
+  return -1;
+
+  AllBikes->Elem[i] = NULL;
+  AllBikes->currentbikes-=1;
+  Resort(AllBikes,i);
+  int Station = Bike->Station;
+  if(Bike->Class == 0)
+  {
+    int j = FindBikeInHeap(AllStations[Station].HElectric,Bike);
+    cout<<j<<endl;
+    AllStations[Station].HElectric->Elem[j] = NULL;
+    AllStations[Station].HElectric->currentbikes -= 1;
+    Resort(AllStations[Station].HElectric,j);
+    return 0;
+  }
+  if(Bike->Class == 1)
+  {
+    int j = FindBikeInHeap(AllStations[Station].HLady,Bike);
+    AllStations[Station].HLady->Elem[j] = NULL;
+    AllStations[Station].HLady->currentbikes -= 1;
+    Resort(AllStations[Station].HLady,j);
+    return 0;
+  }
+  if(Bike->Class == 2)
+  {
+    int j = FindBikeInHeap(AllStations[Station].HRoad,Bike);
+    AllStations[Station].HRoad->Elem[j] = NULL;
+    AllStations[Station].HRoad->currentbikes -= 1;
+    Resort(AllStations[Station].HRoad,j);
+    return 0;
+  }
+  if(Bike->Class == 3)
+  {
+    int j = FindBikeInHeap(AllStations[Station].HHybrid,Bike);
+    AllStations[Station].HHybrid->Elem[j] = NULL;
+    AllStations[Station].HHybrid->currentbikes -= 1;
+    Resort(AllStations[Station].HHybrid,j);
+    return 0;
+  }
+  return 0;
+}
+void BikeOPs::Inquire (LicenseType License)
+{
+  
+}

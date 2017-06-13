@@ -77,19 +77,10 @@ class BikeOPs
     //////Heap
     void InsertHeap(BikePtr NewBike , HeapType* currentheap);
     bool compare(LicenseType a, LicenseType b);
+    int FindBikeInHeap(HeapType* heap,BikePtr bike);
+    void Resort(HeapType* heap,int deletednumber);
+    void ResortR(HeapType* heap,int number);
 
     HeapType* AllBikes = new HeapType;
     Station* AllStations = new Station [12]; //用數字代替站名
-    // Station* Danshui = new Station;
-    // Station* Beitou = new Station;
-    // Station* Zhongshan = new Station;
-    // Station* Xinpu = new Station;
-    // Station* Ximen = new Station;
-    // Station* Shilin = new Station;
-    // Station* Hongshulin = new Station;
-    // Station* Liuzhangli = new Station;
-    // Station* Muzha = new Station;
-    // Station* Gongguan = new Station;
-    // Station* Guting = new Station;
-    // Station* Jingmei = new Station;
 };
