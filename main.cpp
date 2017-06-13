@@ -6,21 +6,26 @@ int main()
 {
   BikeOPs a;
   /////for newbike
-  string s = "00000";
-  char test[5];
-  strcpy(test, s.c_str());
-  BikePtr newbike =  a.NewBike(test,10000,Electric,Danshui);
-  // s = "00012";
+  BikePtr newbike1 =  a.NewBike("NTHU0",59,Lady,Xinpu);
+  BikePtr newbike2 =  a.NewBike("NTHU1",3,Lady,Danshui);
+  BikePtr newbike3 =  a.NewBike("NTHU2",0,Lady,Danshui);
+  BikePtr newbike4 =  a.NewBike("NTHU3",1,Lady,Danshui);
+  BikePtr newbike5 =  a.NewBike("NTHU4",15,Lady,Danshui);
+  BikePtr newbike6 =  a.NewBike("NTHU5",20,Lady,Jingmei);
+  BikePtr newbike7 =  a.NewBike("NTHU6",3,Lady,Jingmei);
+  // a.Inquire("NTHU6");
+  // a.Inquire("NTHU3");
+  // a.Inquire("01023");
+
+  // string s = "00000";
+  // char test[5];
   // strcpy(test, s.c_str());
-  // BikePtr newbike2 =  a.NewBike(test,10000,Electric,Danshui);
-  BikePtr newbike3 =  a.NewBike("00011",99,Electric,Danshui);
-  BikePtr testbike = a.SearchBike(test);
-  cout<<a.AllStations[0].HElectric->Elem[1]->License<<endl;
-  cout<<a.AllStations[0].HElectric->Elem[3]->License<<endl;
-  cout<<testbike->License<<endl;
-  a.JunkBikePtr(testbike);
-  cout<<"after Junk: "<<endl;
-  cout<<"AllBikes first element :"<<a.AllBikes->Elem[1]->License<<endl;
-  cout<<"AllStations first element :"<<a.AllStations[0].HElectric->Elem[1]->License<<endl;
-  /////////
+  // BikePtr testbike = a.SearchBike(test);
+  // cout<<a.AllStations[0].HElectric->Elem[1]->License<<endl;
+  // cout<<a.AllStations[0].HElectric->Elem[3]->License<<endl;
+  // a.JunkBikePtr(testbike);
+  // cout<<"after Junk: "<<endl;
+  cout<<"AllBikes third element :"<<a.AllBikes->Elem[1]->License<<a.AllBikes->Elem[3]->License<<a.AllBikes->Elem[7]->License<<endl;
+  cout<<"AllStations first element :"<<a.AllStations[0].HLady->Elem[1]->License<<endl;
+
 }
