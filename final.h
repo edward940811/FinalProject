@@ -15,6 +15,7 @@ struct BikeType
   int Cursor; /* cursor to the entry in heap where there is a pointer to this node */
   StationType Station;
   ClassType Class;
+  bool IscalledbyTrans = false;
   BikeType():Mileage(0),Cursor(0){}
    BikeType(LicenseType license, int Mile, ClassType aclass, StationType station)
    {

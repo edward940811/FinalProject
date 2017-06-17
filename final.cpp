@@ -81,19 +81,18 @@ void BikeOPs::InsertHeap(BikePtr newbike, HeapType* currentheap)
     InsertHeap(newbike,currentheap);
   }
 }
-void BikeOPs::UbikeReport()
-{
-  cout<<AllBikes->Elem[3]->License<<endl;
-}
 int BikeOPs::JunkBikePtr(BikePtr Bike)
 {
   int i = FindBikeInHeap(AllBikes,Bike); //return the array number storing the elem
   if(i <= 0)
   return -1;
 
-  AllBikes->Elem[i] = NULL;
-  AllBikes->currentbikes-=1;
-  Resort(AllBikes,i);
+  if(Bike->IscalledbyTrans == false)
+  {
+    AllBikes->Elem[i] = NULL;
+    AllBikes->currentbikes-=1;
+    Resort(AllBikes,i);
+  }
   int Station = Bike->Station;
   if(Bike->Class == 0)
   {
@@ -130,19 +129,48 @@ int BikeOPs::JunkBikePtr(BikePtr Bike)
   }
   return 0;
 }
-void BikeOPs::Inquire (LicenseType License)
+void BikeOPs::TransBikePtr (StationType Station, BikePtr Bike)
 {
-  BikePtr Bike = SearchBike(License);
-  cout<<Bike->License<<endl;
-  // if(!Bike)
-  // {
-  //   cout<<License<<"does not belong to our company"<<endl;
-  // }
-  // else
-  // {
-  //   cout<<Bike->License<<endl;
-  //   cout<<Bike->Mileage<<endl;
-  //   cout<<Bike->Class<<endl;
-  //   cout<<Bike->Station<<endl;
-  // }
+  int Class = Bike->Class;
+  Bike->IscalledbyTrans == true;
+  JunkBikePtr(Bike);
+  if(Class == 0)
+  {
+    HeapType* stationheap = AllStations[Station].HElectric;
+    InsertHeap(Bike,stationheap);
+    AllStations[Station].NumElectric++;
+  }
+  if(Class == 1)
+  {
+    HeapType* stationheap = AllStations[Station].HLady;
+    InsertHeap(Bike,stationheap);
+    AllStations[Station].NumLady++;
+  }
+  if(Class == 2)
+  {
+    HeapType* stationheap = AllStations[Station].HRoad;
+    InsertHeap(Bike,stationheap);
+    AllStations[Station].NumRoad++;
+  }
+  if(Class == 3)
+  {
+    HeapType* stationheap = AllStations[Station].HHybrid;
+    InsertHeap(Bike,stationheap);
+    AllStations[Station].NumHybrid++;
+  }
+  Bike->IscalledbyTrans == false;
+}
+void BikeOPs::RentBikePtr (StationType Station, BikePtr Bike)
+{
+  if(Bike->Status == 1)
+  {
+    cout<<"The bike is rented"<<endl;
+    return;
+  }
+  Bike->Status = Rented;
+  int Class = Bike->Class;
+  Bike->IscalledbyTrans == true;
+  JunkBikePtr(Bike);
+  HeapType* stationheap = AllStations[Station].HRent;
+  InsertHeap(Bike,stationheap);
 }
