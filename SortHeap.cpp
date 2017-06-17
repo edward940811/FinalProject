@@ -50,7 +50,7 @@ void BikeOPs::ResortR(HeapType* heap ,int deletednumber) //調整右子樹用 sh
 int BikeOPs::FindBikeInHeap(HeapType* heap,BikePtr Bike)
 {
   int i=1;
-  while(i <= heap->currentbikes)
+  while(heap->Elem[i] != NULL)
   {
     if(strcmp(heap->Elem[i]->License,Bike->License)==0)
     return i;

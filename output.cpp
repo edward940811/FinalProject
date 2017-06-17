@@ -154,12 +154,19 @@ void BikeOPs::BReport( void )
 	int stack[size];
   stack[1] = 1;
 	int stack_point = 1;
-
+  bool dontmindthis =false;
 	cout << "Binary Search Tree" << endl;
 	while (stack_point != 0)
   {
 		int traverse_point = stack[stack_point--];
-		cout << data[ traverse_point ] -> License << "->";
+    if(dontmindthis == false)
+    {
+      cout << data[ traverse_point ] -> License;
+      dontmindthis = true;
+    }
+    else
+		cout << "->" << data[ traverse_point ] -> License;
+
 		if( data[ traverse_point * 2 + 1 ] != NULL ) //have right child
     {
 			stack[++stack_point] = traverse_point * 2 + 1;
@@ -176,8 +183,8 @@ void BikeOPs::BReport( void )
 	}
 	stack[1] = 1;
 	stack_point = 1;
-  cout<<endl;
 	//cout << "inorder traverse" << endl;
+  bool dontmindthis2 =false;
 	while ( visited != size )
   {
 		int traverse_point = stack[stack_point];
@@ -191,14 +198,26 @@ void BikeOPs::BReport( void )
     {
 			if ( data[ traverse_point * 2 + 1 ] == NULL )//don't have right child
       {
-				cout <<  data[ traverse_point ] -> License << "->";
-				data[ traverse_point ] = NULL;
+        if(dontmindthis2 == false)
+        {
+				 cout <<  data[ traverse_point ] -> License ;
+         dontmindthis2 = true;
+        }
+        else
+          cout << "->" << data[ traverse_point ] -> License ;
+        data[ traverse_point ] = NULL;
 				stack_point--;
 				visited++;
 			}
 			else
       {
-				cout << data[ traverse_point ] -> License << "->";
+        if(dontmindthis2 == false)
+        {
+         cout <<  data[ traverse_point ] -> License ;
+         dontmindthis2 = true;
+        }
+        else
+          cout << "->" << data[ traverse_point ] -> License ;
 				data[ traverse_point ] = NULL;
 				stack_point--;
 				visited++;
@@ -218,4 +237,34 @@ void BikeOPs::UbikeReport()
   for(int i=0;i<60;i++)
   cout<<"=";
   cout<<endl;
+}
+string BikeOPs::ReturnStationName(int Station)
+{
+  string s;
+    if(Station == 0)
+    s = "Danshui";
+    if(Station == 1)
+    s = "Hongshulin ";
+    if(Station == 2)
+    s = "Shilin";
+    if(Station == 3)
+    s = "Beitou";
+    if(Station == 4)
+    s = "Zhongshan";
+    if(Station == 5)
+    s = "Xinpu";
+    if(Station == 6)
+    s = "Ximen";
+    if(Station == 7)
+    s = "Liuzhangli";
+    if(Station == 8)
+    s = "Muzha";
+    if(Station == 9)
+    s = "Guting";
+    if(Station == 10)
+    s = "Gongguan";
+    if(Station == 11)
+    s = "Jingmei";
+
+    return s;
 }

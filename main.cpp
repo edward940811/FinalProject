@@ -23,21 +23,12 @@ int main()
   // a.Inquire("NTHU4");
   // a.Inquire("NTHU5");
   // a.Inquire("NTHU6");
-  // a.Inquire("NTHU7");
-  a.StationReport(Danshui);
-  a.BReport();
-  // a.Inquire("NTHU3");
+  // a.JunkBikePtr(newbike3);
+  // a.Inquire("NTHU0");
+  // a.StationReport(Danshui);
+  // a.BReport();
+  a.TransBikePtr(Danshui,newbike1);
   // a.Inquire("01023");
 
-  // string s = "00000";
-  // char test[5];
-  // strcpy(test, s.c_str());
-  // BikePtr testbike = a.SearchBike(test);
-  // cout<<a.AllStations[0].HElectric->Elem[1]->License<<endl;
-  // cout<<a.AllStations[0].HElectric->Elem[3]->License<<endl;
-  // a.JunkBikePtr(testbike);
-  // cout<<a.AllStations[6].HLady->Elem[1]->License<<endl;
-  // cout<<"AllBikes third element :"<<a.AllBikes->Elem[1]->License<<a.AllBikes->Elem[3]->License<<a.AllBikes->Elem[7]->License<<endl;
-  // cout<<"AllStations first element :"<<a.AllStations[0].HLady->Elem[1]->License<<endl;
 
 }

@@ -67,7 +67,7 @@ class BikeOPs
     BikePtr SearchBike ( LicenseType License);
     int JunkBikePtr (BikePtr Bike);
     void TransBikePtr (StationType Station, BikePtr Bike);
-    void RentBikePtr (StationType Station, BikePtr Bike);
+    void RentBikePtr (StationType Station, ClassType Class);
     int Returns (StationType Station, BikePtr Bike, int ReturnMile);
     void Inquire (LicenseType License);
     void StationReport (StationType Station);
@@ -79,11 +79,12 @@ class BikeOPs
     void InsertHeap(BikePtr NewBike , HeapType* currentheap);
     bool compare(LicenseType a, LicenseType b);
     int FindBikeInHeap(HeapType* heap,BikePtr bike);
+    int FindLargestMileageBikeInHeap(HeapType *heap, int i , int largestBike);
     void Resort(HeapType* heap,int deletednumber);
     void ResortR(HeapType* heap,int number);
     void PrintStationName(int number);
     void Inorder(HeapType *currentheap, int callingfunction);
-
+    string ReturnStationName(int Station);
     HeapType* AllBikes = new HeapType;
     Station* AllStations = new Station [12]; //用數字代替站名
 };
