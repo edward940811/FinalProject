@@ -35,7 +35,7 @@ BikePtr BikeOPs::NewBike ( LicenseType License, int Mile, ClassType Class, Stati
 BikePtr BikeOPs::SearchBike(LicenseType License)
 {
   int i=1;
-  while(i <= AllBikes->currentbikes)
+  while(AllBikes->Elem[i] != NULL )
   {
     if(strcmp(AllBikes->Elem[i]->License,License)==0)
     return AllBikes->Elem[i];
@@ -67,6 +67,7 @@ void BikeOPs::InsertHeap(BikePtr newbike, HeapType* currentheap)
   if(currentheap->Elem[currentheap->numberfortracing] == NULL)
   {
     currentheap->Elem[currentheap->numberfortracing] = newbike;
+    currentheap->currentbikes++;
     currentheap->numberfortracing = 1;
     return;
   }

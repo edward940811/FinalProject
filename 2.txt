@@ -1,0 +1,23 @@
+        License        Mileage          Class        Station
+============================================================
+          NTHU0             59              1              5
+        License        Mileage          Class        Station
+============================================================
+          NTHU1              3              1              0
+        License        Mileage          Class        Station
+============================================================
+          NTHU2              0              1              0
+        License        Mileage          Class        Station
+============================================================
+          NTHU3              1              1              0
+        License        Mileage          Class        Station
+============================================================
+          NTHU4             15              1              0
+        License        Mileage          Class        Station
+============================================================
+          NTHU5             20              1             11
+        License        Mileage          Class        Station
+============================================================
+          NTHU6              3              1             11
+Bike NTHU7 does not belong to our company.
+AllBikes third element :NTHU0NTHU1NTHU2

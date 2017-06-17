@@ -81,6 +81,8 @@ class BikeOPs
     int FindBikeInHeap(HeapType* heap,BikePtr bike);
     void Resort(HeapType* heap,int deletednumber);
     void ResortR(HeapType* heap,int number);
+    void PrintStationName(int number);
+    void Inorder(HeapType *currentheap, int callingfunction);
 
     HeapType* AllBikes = new HeapType;
     Station* AllStations = new Station [12]; //用數字代替站名
