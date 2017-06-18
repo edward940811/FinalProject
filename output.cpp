@@ -4,8 +4,8 @@
 using namespace std;
 void BikeOPs::Inorder(HeapType* currentheap, int callingfunction) //看哪一個叫的 ＵＢＩＫＥＲＥＰＯＲＴ還是ＳＴＡＴＩＯＮＲＥＰＯＲＴ
 {
-  BikePtr data[10000000];
-	 for( int i = 0; i < 10000000; ++i )
+  BikePtr data[1000000];
+	 for( int i = 0; i < 1000000; ++i )
 	 	data[i] = currentheap -> Elem[i];
 
   int size = currentheap->currentbikes;
@@ -28,9 +28,9 @@ void BikeOPs::Inorder(HeapType* currentheap, int callingfunction) //看哪一個
 			if ( data[ traverse_point * 2 + 1 ] == NULL )//don't have right child
       {
         if(callingfunction == 1)
-        cout << setw(12) << data[ traverse_point ] ->License << setw(12) << data[ traverse_point ] ->Mileage<< setw(12) << data[ traverse_point ] ->Class <<setw(12)<<data[ traverse_point ] ->Station<<endl;
+        cout << setw(12) << data[ traverse_point ] ->License << setw(12) << data[ traverse_point ] ->Mileage<< setw(12) << ReturnClassName(data[ traverse_point ] ->Class )<<setw(12)<<ReturnStationName(data[ traverse_point ] ->Station)<<endl;
         else
-				cout << setw(15)<< data[ traverse_point ] -> License << setw(15)<< data[traverse_point] -> Mileage << setw(15) <<data[traverse_point]->Class <<endl;
+				cout << setw(15)<< data[ traverse_point ] -> License << setw(15)<< data[traverse_point] -> Mileage << setw(15) <<ReturnClassName(data[traverse_point]->Class) <<endl;
 
         data[ traverse_point ] = NULL;
 				stack_point--;
@@ -39,9 +39,9 @@ void BikeOPs::Inorder(HeapType* currentheap, int callingfunction) //看哪一個
 			else
       {
         if(callingfunction == 1)
-        cout << setw(12) << data[ traverse_point ] ->License << setw(12) << data[ traverse_point ] ->Mileage<< setw(12) << data[ traverse_point ] ->Class <<setw(12)<<data[ traverse_point ] ->Station<<endl;
+        cout << setw(12) << data[ traverse_point ] ->License << setw(12) << data[ traverse_point ] ->Mileage<< setw(12) << ReturnClassName(data[ traverse_point ] ->Class) <<setw(12)<<ReturnStationName(data[ traverse_point ] ->Station)<<endl;
         else
-        cout << setw(15)<< data[ traverse_point ] -> License << setw(15)<< data[traverse_point] -> Mileage << setw(15) <<data[traverse_point]->Class <<endl;
+        cout << setw(15)<< data[ traverse_point ] -> License << setw(15)<< data[traverse_point] -> Mileage << setw(15) <<ReturnClassName(data[traverse_point]->Class) <<endl;
 
         data[ traverse_point ] = NULL;
 				stack_point--;
@@ -82,18 +82,16 @@ void BikeOPs::StationReport(StationType Stationnum)
   HeapType *currentheap;
   currentheap = currentStation.HElectric;
   total += currentheap->currentbikes;
-  // cout<<total<<endl;
-  // cout<<currentheap->Elem[1]->License<<endl;
-  //Inorder(currentStation.HElectric,0);
-  // currentheap = currentStation.HLady;
-  // total += currentheap->currentbikes;
-  // Inorder(currentheap,0);
-  // currentheap = currentStation.HRoad;
-  // total += currentheap->currentbikes;
-  // Inorder(currentheap,0);
-  // currentheap = currentStation.HHybrid;
-  // total += currentheap->currentbikes;
-  // Inorder(currentheap,0);
+  Inorder(currentheap,0);
+  currentheap = currentStation.HLady;
+  total += currentheap->currentbikes;
+  Inorder(currentheap,0);
+  currentheap = currentStation.HRoad;
+  total += currentheap->currentbikes;
+  Inorder(currentheap,0);
+  currentheap = currentStation.HHybrid;
+  total += currentheap->currentbikes;
+  Inorder(currentheap,0);
 
   for(int i=0;i<60;i++)
   cout<<"=";
