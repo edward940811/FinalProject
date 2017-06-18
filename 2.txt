@@ -1,23 +1,39 @@
+ New bike is received by Station Xinpu
+ New bike is received by Station Jingmei
+ New bike is received by Station Jingmei
+ New bike is received by Station Jingmei
+ New bike is received by Station Jingmei
+ New bike is received by Station Danshui
+ New bike is received by Station Liuzhangli
+ New bike is received by Station Danshui
+ New bike is received by Station Muzha
+ New bike is received by Station Danshui
+ New bike is received by Station Liuzhangli
+Bike CCCC0 does not belong to our company.
+Bike CCCC1 does not belong to our company.
+Bike DDDDD does not belong to our company.
         License        Mileage          Class        Station
 ============================================================
-          NTHU0             59              1              5
+          NTHU3              1                       Jingmei
+
+Bike DDDD2 does not belong to our company.
         License        Mileage          Class        Station
 ============================================================
-          NTHU1              3              1              0
-        License        Mileage          Class        Station
-============================================================
-          NTHU2              0              1              0
-        License        Mileage          Class        Station
-============================================================
-          NTHU3              1              1              0
-        License        Mileage          Class        Station
-============================================================
-          NTHU4             15              1              0
-        License        Mileage          Class        Station
-============================================================
-          NTHU5             20              1             11
-        License        Mileage          Class        Station
-============================================================
-          NTHU6              3              1             11
-Bike NTHU7 does not belong to our company.
-AllBikes third element :NTHU0NTHU1NTHU2
+          NTHU6              3                    Liuzhangli
+
+Bike NTHU1 is deleted from Jingmei
+Bike CSDS3 is deleted from Danshui
+Binary Search Tree
+NTHU0->CSDS4->CSDS5->CSDS6->NTHU2->NTHU3->NTHU4->NTHU5->NTHU6
+CSDS4->CSDS5->CSDS6->NTHU0->NTHU2->NTHU3->NTHU4->NTHU5->NTHU6
+Bike CSDS4 is deleted from Muzha
+Bike CSDS5 is deleted from Danshui
+Bike CSDS6 is deleted from Liuzhangli
+Binary Search Tree
+NTHU0->NTHU2->NTHU3->NTHU4->NTHU5->NTHU6
+NTHU0->NTHU2->NTHU3->NTHU4->NTHU5->NTHU6
+Bike NTHU0 is deleted from Xinpu
+Bike NTHU1 does not belong to our company.
+Binary Search Tree
+NTHU2->NTHU3->NTHU4->NTHU5->NTHU6
+NTHU2->NTHU3->NTHU4->NTHU5->NTHU6

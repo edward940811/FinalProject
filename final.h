@@ -85,6 +85,14 @@ class BikeOPs
     void PrintStationName(int number);
     void Inorder(HeapType *currentheap, int callingfunction);
     string ReturnStationName(int Station);
+    string ReturnClassName(int Class);
+    //////////////
+
+    int station_to_int( string Station );
+    int bike_to_int( string Bike );
+    int shortest( StationType Station1, StationType Station2 );  //find shortest path
+    int** map = new int* [12];
+    ///////////
     HeapType* AllBikes = new HeapType;
     Station* AllStations = new Station [12]; //用數字代替站名
 };

@@ -53,9 +53,10 @@ void BikeOPs::Inorder(HeapType* currentheap, int callingfunction) //看哪一個
 void BikeOPs::Inquire (LicenseType License)
 {
   BikePtr Bike = SearchBike(License);
-  if(!Bike)
+  if(Bike == NULL)
   {
     cout<<"Bike "<<License<<" does not belong to our company."<<endl;
+    return;
   }
   else
   {
@@ -63,7 +64,7 @@ void BikeOPs::Inquire (LicenseType License)
     for(int i=0;i<60;i++)
     cout<<"=";
     cout<<endl;
-    cout << setw(15) << Bike->License << setw(15) << Bike->Mileage << setw(15) << Bike->Class <<setw(15)<<Bike->Station<<endl;
+    cout << setw(15) << Bike->License << setw(15) << Bike->Mileage << setw(15) << ReturnClassName(Bike->Class) <<setw(15)<<ReturnStationName(Bike->Station)<<endl;
     cout<<endl;
   }
 }
@@ -265,6 +266,18 @@ string BikeOPs::ReturnStationName(int Station)
     s = "Gongguan";
     if(Station == 11)
     s = "Jingmei";
-
     return s;
+}
+string BikeOPs::ReturnClassName(int Class)
+{
+  string s;
+  if(Class == 0)
+  s = "Electric";
+  if(Class == 1)
+  s = "Lady";
+  if(Class == 2)
+  s = "Road";
+  if(Class == 3)
+  s = "Hybrid";
+  return s;
 }

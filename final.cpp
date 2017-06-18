@@ -1,4 +1,7 @@
 #include<iostream>
+#include<cstring>
+#include <stdio.h>
+#include <string.h>
 #include "final.h"
 using namespace std;
 BikePtr BikeOPs::NewBike ( LicenseType License, int Mile, ClassType Class, StationType Station)
@@ -6,8 +9,8 @@ BikePtr BikeOPs::NewBike ( LicenseType License, int Mile, ClassType Class, Stati
   BikePtr newbike = new BikeType(License,Mile,Class,Station);
   InsertHeap(newbike , AllBikes);
   //fuck this
-    cout<<" New bike is received by Station ";
-    cout<<ReturnStationName(Station)<<endl;
+    cout<<"New bike is received by Station";
+    cout<<ReturnStationName(Station)<<"."<<endl;
 
   //Danshui, Hongshulin, Beitou, Shilin, Zhongshan, Xinpu, Ximen, Liuzhangli, Muzha, Guting, Gongguan, Jingmei
   if(Class == 0)
@@ -45,7 +48,7 @@ BikePtr BikeOPs::SearchBike(LicenseType License)
     return AllBikes->Elem[i];
     if(compare(AllBikes->Elem[i]->License,License))
     i *= 2;
-    if(!compare(AllBikes->Elem[i]->License,License))
+    else if(!compare(AllBikes->Elem[i]->License,License))
     i = i*2 +1;
   }
   return NULL;
@@ -89,22 +92,22 @@ void BikeOPs::InsertHeap(BikePtr newbike, HeapType* currentheap)
 int BikeOPs::JunkBikePtr(BikePtr Bike)
 {
   int i = FindBikeInHeap(AllBikes,Bike); //return the array number storing the elem
+  if(i <= 0)
+  {
+    cout<<"Bike "<< Bike->License <<" does not belong to our company."<<endl;
+    return -1;
+  }
   if(Bike->IscalledbyTrans == false)
   {
-    if(i <= 0)
-    {
-      cout<<"Bike "<< Bike->License <<" does not belong to our company."<<endl;
-      return -1;
-    }
     if(Bike->Status == 1)
     {
       cout<<"Bike "<< Bike->License <<" is now being rented."<< endl;
       return -1;
     }
+    cout<<"Bike "<< Bike->License <<" is deleted from "<< ReturnStationName(Bike->Station)<< endl;
     AllBikes->Elem[i] = NULL;
     AllBikes->currentbikes-=1;
     Resort(AllBikes,i);
-    cout<<"Bike "<< Bike->License <<"is deleted from "<< ReturnStationName(Bike->Station)<< endl;
   }
   int Station = Bike->Station;
   if(Bike->Class == 0)
@@ -148,13 +151,13 @@ void BikeOPs::TransBikePtr (StationType Station, BikePtr Bike)
     cout<<"Bike "<< Bike->License <<" is now being rented."<< endl;
     return;
   }
-  if(SearchBike(Bike->License) == NULL)
-  {
-    cout<<"Bike "<< Bike->License <<" does not belong to our company."<<endl;
-    return ;
-  }
+  // if(SearchBike(Bike->License) == NULL)
+  // {
+  //   cout<<"Bike "<< Bike->License <<" does not belong to our company."<<endl;
+  //   return ;
+  // }
   int Class = Bike->Class;
-  Bike->IscalledbyTrans == true;
+  Bike->IscalledbyTrans = true;
   JunkBikePtr(Bike);
   if(Class == 0)
   {

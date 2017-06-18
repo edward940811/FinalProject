@@ -56,7 +56,7 @@ int BikeOPs::FindBikeInHeap(HeapType* heap,BikePtr Bike)
     return i;
     if(compare(heap->Elem[i]->License,Bike->License))
     i *= 2;
-    if(!compare(heap->Elem[i]->License,Bike->License))
+    else if(!compare(heap->Elem[i]->License,Bike->License))
     i = i*2 +1;
   }
   return -1; // not located
