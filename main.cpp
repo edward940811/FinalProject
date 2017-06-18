@@ -46,7 +46,7 @@ int main(int argc, char * argv[]) {
 		int station1 = a.station_to_int(s);
 		int station2 = a.station_to_int(t);
 
-		cout << s << " " << t << endl;
+		//cout << s << " " << t << endl;
 
 		if( station1 < 0 || station2 < 0 ){
 			cout << "input undefined map" << endl;
@@ -74,7 +74,7 @@ int main(int argc, char * argv[]) {
 
 			char temp[5];
 
-			cout << t << " " << s << endl;
+			//cout << t << " " << s << endl;
 
 			if( type < 0 || station < 0 )
 				cout << "input undefined bike" << endl;
@@ -118,6 +118,12 @@ int main(int argc, char * argv[]) {
 		}
 		else if(cmd == "BReport" ){
 			a.BReport();
+		}
+		else if(cmd == "StationReport" ){
+			string s;
+			testCaseIn >> s;
+			StationType station = (StationType)a.station_to_int(s);
+			a.StationReport(station);
 		}
 		//output something
 		//fileOut << "your output" << endl;

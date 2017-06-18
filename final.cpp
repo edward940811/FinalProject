@@ -52,7 +52,7 @@ BikePtr BikeOPs::SearchBike(LicenseType License)
     else if(!compare(AllBikes->Elem[i]->License,License))
 		i = i*2 +1;
 	//cout <<"   "<< i << endl;
-	if( i > 255 ) return NULL;
+	//if( i > 255 ) return NULL;
   }
   return NULL;
 }

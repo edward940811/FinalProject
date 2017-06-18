@@ -4,13 +4,14 @@
 using namespace std;
 void BikeOPs::Inorder(HeapType* currentheap, int callingfunction) //看哪一個叫的 ＵＢＩＫＥＲＥＰＯＲＴ還是ＳＴＡＴＩＯＮＲＥＰＯＲＴ
 {
-  BikePtr data[513];
-
-	for( int i = 0; i < 256; ++i )
-		data[i] = currentheap -> Elem[i];
+  BikePtr data[10000000];
+	 for( int i = 0; i < 10000000; ++i )
+	 	data[i] = currentheap -> Elem[i];
 
   int size = currentheap->currentbikes;
   int stack[size];
+  // if (size ==1)
+  // size = 2;
   stack[1] = 1;
   int visited = 0;
   int stack_point = 1;
@@ -53,7 +54,6 @@ void BikeOPs::Inorder(HeapType* currentheap, int callingfunction) //看哪一個
 void BikeOPs::Inquire (LicenseType License)
 {
   BikePtr Bike = SearchBike(License);
-  //cout << License << endl;
   if(Bike == NULL)
   {
     cout<<"Bike "<< License <<" does not belong to our company."<<endl;
@@ -82,17 +82,18 @@ void BikeOPs::StationReport(StationType Stationnum)
   HeapType *currentheap;
   currentheap = currentStation.HElectric;
   total += currentheap->currentbikes;
-
-  Inorder(currentheap,0);
-  currentheap = currentStation.HLady;
-  total += currentheap->currentbikes;
-  Inorder(currentheap,0);
-  currentheap = currentStation.HRoad;
-  total += currentheap->currentbikes;
-  Inorder(currentheap,0);
-  currentheap = currentStation.HHybrid;
-  total += currentheap->currentbikes;
-  Inorder(currentheap,0);
+  // cout<<total<<endl;
+  // cout<<currentheap->Elem[1]->License<<endl;
+  //Inorder(currentStation.HElectric,0);
+  // currentheap = currentStation.HLady;
+  // total += currentheap->currentbikes;
+  // Inorder(currentheap,0);
+  // currentheap = currentStation.HRoad;
+  // total += currentheap->currentbikes;
+  // Inorder(currentheap,0);
+  // currentheap = currentStation.HHybrid;
+  // total += currentheap->currentbikes;
+  // Inorder(currentheap,0);
 
   for(int i=0;i<60;i++)
   cout<<"=";
@@ -144,9 +145,9 @@ void BikeOPs::PrintStationName(int number)
 void BikeOPs::BReport( void )
 {
 	HeapType* temp = AllBikes;
-	BikePtr data[256];
+	BikePtr data[10000];
 
-	for( int i = 0; i < 256; ++i ){
+	for( int i = 0; i < 10000; ++i ){
 		data[i] = temp -> Elem[i];
 	}
 
@@ -180,10 +181,6 @@ void BikeOPs::BReport( void )
 		}
 	}
   cout<<endl;
-	for( int i = 0; i < 256; ++i )
-  {
-		data[i] = temp -> Elem[i];
-	}
 	stack[1] = 1;
 	stack_point = 1;
 	//cout << "inorder traverse" << endl;

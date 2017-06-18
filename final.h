@@ -29,7 +29,7 @@ struct BikeType
 typedef struct BikeType *BikePtr;
 struct HeapType
 {
-  BikePtr Elem[10000]; /*use array to implement heap, and each node in the heap is a pointer*/
+  BikePtr Elem[10000000]; /*use array to implement heap, and each node in the heap is a pointer*/
   int Number;
   int currentbikes;
   int numberfortracing;
@@ -88,17 +88,17 @@ class BikeOPs
     HeapType* AllBikes = new HeapType;
     Station* AllStations = new Station [12]; //用數字代替站名
     string ReturnClassName(int Class);
-	
+
 	// -------------------------------------------------------------------------------------------
 	int station_to_int( string Station );
 	int bike_to_int( string Bike );
 	int shortest( StationType Station1, StationType Station2 );  //find shortest path
 	// -------------------------------------------------------------------------------------------
-	
+
 	// -------------------------------------------------------------------------------------------
 	//distance map
 	int** map = new int* [12];
     // -------------------------------------------------------------------------------------------
-	
+
 	void NetSearch( string Station );
 };

@@ -38,13 +38,13 @@ void BikeOPs::ResortR(HeapType* heap ,int deletednumber) //調整右子樹用 sh
   //left
   if(heap->Elem[2*k] != NULL)
   {
-    heap[2*deletednumber] = heap[2*k];
+    heap->Elem[2*deletednumber] = heap->Elem[2*k];
     ResortR(heap,k);
   }
   //right
   if(heap->Elem[2*k+1] != NULL)
   {
-    heap[2*deletednumber+1] = heap[2*k+1];
+    heap->Elem[2*deletednumber+1] = heap->Elem[2*k+1];
     ResortR(heap,k);
   }
 }
