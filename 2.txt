@@ -22,75 +22,7 @@ Bike 00006 does not belong to our company.
 Bike 00007 does not belong to our company.
 Bike NTHU1 is deleted from Jingmei
 Bike AAAA2 is deleted from Liuzhangli
-                       Danshui
-                    Free Bikes
-        License        Mileage          Class       Subtotal
-============================================================
-          CCCC0             33       Electric
-          ZZZZ0             33       Electric
-          NTHU5             20           Lady
-          NTHU6              3           Lady
-          BBBB0              5           Road
-          AAAA0             13         Hybrid
-============================================================
-                                                           6
-                  Rented Bikes
-        License        Mileage          Class       Subtotal
-============================================================
-============================================================
-                                                           0
-                       Jingmei
-                    Free Bikes
-        License        Mileage          Class       Subtotal
-============================================================
-          NTHU2              0           Lady
-          NTHU3              1           Lady
-          NTHU4             15           Lady
-============================================================
-                                                           3
-                  Rented Bikes
-        License        Mileage          Class       Subtotal
-============================================================
-============================================================
-                                                           0
-                         Xinpu
-                    Free Bikes
-        License        Mileage          Class       Subtotal
-============================================================
-          NTHU0             59           Lady
-============================================================
-                                                           1
-                  Rented Bikes
-        License        Mileage          Class       Subtotal
-============================================================
-============================================================
-                                                           0
-                         Ximen
-                    Free Bikes
-        License        Mileage          Class       Subtotal
-============================================================
-          AC000             33       Electric
-          CCCC1             33       Electric
-============================================================
-                                                           2
-                  Rented Bikes
-        License        Mileage          Class       Subtotal
-============================================================
-============================================================
-                                                           0
-                    Liuzhangli
-                    Free Bikes
-        License        Mileage          Class       Subtotal
-============================================================
-          AAAA1             37         Hybrid
-          AAAA3             37         Hybrid
-============================================================
-                                                           2
-                  Rented Bikes
-        License        Mileage          Class       Subtotal
-============================================================
-============================================================
-                                                           0
-Binary Search Tree
-NTHU0->AAAA0->AAAA1->AAAA3->BBBB0->AC000->CCCC1->AC000->NTHU2->NTHU3->NTHU4->NTHU5->NTHU6->ZZZZ0
-AAAA0->AAAA1->AAAA3->AC000->BBBB0->AC000->CCCC1->NTHU0->NTHU2->NTHU3->NTHU4->NTHU5->NTHU6->ZZZZ0
+A bike is rented from Jingmei.
+A bike is rented from Jingmei.
+A bike is rented from Danshui.
+Rental charge for this bike is 1200

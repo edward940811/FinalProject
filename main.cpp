@@ -125,6 +125,29 @@ int main(int argc, char * argv[]) {
 			StationType station = (StationType)a.station_to_int(s);
 			a.StationReport(station);
 		}
+		else if(cmd == "Rent" ){
+			string s,c;
+			testCaseIn >> s >> c;
+			StationType station = (StationType)a.station_to_int(s);
+			ClassType type = (ClassType)a.bike_to_int(c);
+			a.RentBikePtr(station,type);
+		}
+		else if(cmd == "Returns" ){
+			string s,lic,mile;
+			testCaseIn >> s >> lic >> mile;
+			char temp[5];
+			StationType station = (StationType)a.station_to_int(s);
+			for( int i = 0; i < 5 ; ++i ){
+				temp[i] = lic[i];
+			}
+			temp[5]='\0';
+			BikePtr bike = a.SearchBike( temp );
+			if( bike == NULL ){
+				cout<<"Bike "<< temp <<" does not belong to our company."<<endl;
+			}
+			else
+				a.Returns(station,bike,stoi(mile));
+		}
 		//output something
 		//fileOut << "your output" << endl;
 	}

@@ -245,9 +245,9 @@ void BikeOPs::RentBikePtr (StationType Station, ClassType Class)
       Bike = AllStations[Station].HHybrid->Elem[largestBike];
     }
   }
-    Bike->Status = Rented;
-    Bike->IscalledbyTrans == true;
+    Bike->IscalledbyTrans = true;
     JunkBikePtr(Bike);
+    Bike->Status = Rented;
     HeapType* stationheap = AllStations[Station].HRent;
     InsertHeap(Bike,stationheap);
     cout<<"A bike is rented from "<<ReturnStationName(Station)<<"."<<endl;
@@ -265,11 +265,11 @@ int BikeOPs::FindLargestMileageBikeInHeap(HeapType *heap, int i, int largestBike
   }
   if(heap->Elem[2*i+1] != NULL) //right
   {
-    if(heap->Elem[i]->Mileage < heap->Elem[2*i]->Mileage)
+    if(heap->Elem[i]->Mileage < heap->Elem[2*i+1]->Mileage)
     {
         largestBike = 2*i+1;
     }
-    i = i*2;
+    i = i*2+1;
     FindLargestMileageBikeInHeap(heap,i,largestBike);
   }
   return largestBike;

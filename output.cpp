@@ -104,6 +104,7 @@ void BikeOPs::StationReport(StationType Stationnum)
   cout<<endl;
   currentheap = currentStation.HRent;
   total = currentheap->currentbikes;
+  Inorder(currentheap,0);
   for(int i=0;i<60;i++)
   cout<<"=";
   cout<<endl;
@@ -143,9 +144,9 @@ void BikeOPs::PrintStationName(int number)
 void BikeOPs::BReport( void )
 {
 	HeapType* temp = AllBikes;
-	BikePtr data[10000];
+	BikePtr data[100000];
 
-	for( int i = 0; i < 10000; ++i ){
+	for( int i = 0; i < 100000; ++i ){
 		data[i] = temp -> Elem[i];
 	}
 
