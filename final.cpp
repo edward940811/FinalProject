@@ -99,7 +99,7 @@ int BikeOPs::JunkBikePtr(BikePtr Bike)
   }
   if(Bike->IscalledbyTrans == false)
   {
-    if(Bike->Status == 1)
+    if(Bike->Status == Rented)
     {
       cout<<"Bike "<< Bike->License <<" is now being rented."<< endl;
       return -1;
@@ -151,11 +151,6 @@ void BikeOPs::TransBikePtr (StationType Station, BikePtr Bike)
     cout<<"Bike "<< Bike->License <<" is now being rented."<< endl;
     return;
   }
-  // if(SearchBike(Bike->License) == NULL)
-  // {
-  //   cout<<"Bike "<< Bike->License <<" does not belong to our company."<<endl;
-  //   return ;
-  // }
   int Class = Bike->Class;
   Bike->IscalledbyTrans = true;
   JunkBikePtr(Bike);
@@ -201,7 +196,7 @@ void BikeOPs::RentBikePtr (StationType Station, ClassType Class)
     else
     {
       int Mileage = AllStations[Station].HElectric->Elem[i]->Mileage;
-      largestBike = FindLargestMileageBikeInHeap(AllStations[Station].HElectric,i,largestBike);
+      largestBike = FindLargestMileageBikeInHeap(AllStations[Station].HElectric,i);
       Bike = AllStations[Station].HElectric->Elem[largestBike];
     }
   }
@@ -215,7 +210,7 @@ void BikeOPs::RentBikePtr (StationType Station, ClassType Class)
     else
     {
       int Mileage = AllStations[Station].HLady->Elem[i]->Mileage;
-      largestBike = FindLargestMileageBikeInHeap(AllStations[Station].HLady,i,largestBike);
+      largestBike = FindLargestMileageBikeInHeap(AllStations[Station].HLady,i);
       Bike = AllStations[Station].HLady->Elem[largestBike];
     }
   }
@@ -229,7 +224,7 @@ void BikeOPs::RentBikePtr (StationType Station, ClassType Class)
     else
     {
       int Mileage = AllStations[Station].HRoad->Elem[i]->Mileage;
-      largestBike = FindLargestMileageBikeInHeap(AllStations[Station].HRoad,i,largestBike);
+      largestBike = FindLargestMileageBikeInHeap(AllStations[Station].HRoad,i);
       Bike = AllStations[Station].HRoad->Elem[largestBike];
     }
   }
@@ -243,36 +238,35 @@ void BikeOPs::RentBikePtr (StationType Station, ClassType Class)
     else
     {
       int Mileage = AllStations[Station].HHybrid->Elem[i]->Mileage;
-      largestBike = FindLargestMileageBikeInHeap(AllStations[Station].HHybrid,i,largestBike);
+      largestBike = FindLargestMileageBikeInHeap(AllStations[Station].HHybrid,i);
       Bike = AllStations[Station].HHybrid->Elem[largestBike];
     }
   }
-    Bike->Status = Rented;
-    Bike->IscalledbyTrans == true;
+    Bike->IscalledbyTrans = true;
     JunkBikePtr(Bike);
     HeapType* stationheap = AllStations[Station].HRent;
     InsertHeap(Bike,stationheap);
+    Bike->Status = Rented;
+    //cout<<stationheap->Elem[1]->License<<endl;
     cout<<"A bike is rented from "<<ReturnStationName(Station)<<"."<<endl;
 }
-int BikeOPs::FindLargestMileageBikeInHeap(HeapType *heap, int i, int largestBike)
+int BikeOPs::FindLargestMileageBikeInHeap(HeapType *heap, int i)
 {
   if(heap->Elem[2*i] != NULL) //left
   {
     if(heap->Elem[i]->Mileage < heap->Elem[2*i]->Mileage)
     {
-        largestBike = 2*i;
+        heap->largestBike = 2*i;
     }
-    i = i*2;
-    FindLargestMileageBikeInHeap(heap,i,largestBike);
+    FindLargestMileageBikeInHeap(heap,i*2);
   }
   if(heap->Elem[2*i+1] != NULL) //right
   {
-    if(heap->Elem[i]->Mileage < heap->Elem[2*i]->Mileage)
+    if(heap->Elem[i]->Mileage < heap->Elem[2*i+1]->Mileage)
     {
-        largestBike = 2*i+1;
+        heap->largestBike = 2*i+1;
     }
-    i = i*2;
-    FindLargestMileageBikeInHeap(heap,i,largestBike);
+    FindLargestMileageBikeInHeap(heap,i*2+1);
   }
-  return largestBike;
+  return heap->largestBike;
 }

@@ -16,7 +16,7 @@ struct BikeType
   StationType Station;
   ClassType Class;
   bool IscalledbyTrans = false;
-  BikeType():Mileage(0),Cursor(0){}
+  BikeType():Status(Free),Mileage(0),Cursor(0){}
    BikeType(LicenseType license, int Mile, ClassType aclass, StationType station)
    {
     for(int i=0; i<5 ;i++)
@@ -33,6 +33,7 @@ struct HeapType
   int Number;
   int currentbikes;
   int numberfortracing;
+  int largestBike;
   HeapType():Number(0),currentbikes(0),numberfortracing(1){}
 };
 struct Station
@@ -79,7 +80,7 @@ class BikeOPs
     void InsertHeap(BikePtr NewBike , HeapType* currentheap);
     bool compare(LicenseType a, LicenseType b);
     int FindBikeInHeap(HeapType* heap,BikePtr bike);
-    int FindLargestMileageBikeInHeap(HeapType *heap, int i , int largestBike);
+    int FindLargestMileageBikeInHeap(HeapType *heap, int i);
     void Resort(HeapType* heap,int deletednumber);
     void ResortR(HeapType* heap,int number);
     void PrintStationName(int number);

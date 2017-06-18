@@ -27,9 +27,9 @@ void BikeOPs::Inorder(HeapType* currentheap, int callingfunction) //看哪一個
 			if ( data[ traverse_point * 2 + 1 ] == NULL )//don't have right child
       {
         if(callingfunction == 1)
-        cout << setw(12) << data[ traverse_point ] ->License << setw(12) << data[ traverse_point ] ->Mileage<< setw(12) << data[ traverse_point ] ->Class <<setw(12)<<data[ traverse_point ] ->Station<<endl;
+        cout << setw(12) << data[ traverse_point ] ->License << setw(12) << data[ traverse_point ] ->Mileage<< setw(12) << ReturnClassName(data[ traverse_point ] ->Class) <<setw(12)<<ReturnStationName(data[ traverse_point ] ->Station)<<endl;
         else
-				cout << setw(15)<< data[ traverse_point ] -> License << setw(15)<< data[traverse_point] -> Mileage << setw(15) <<data[traverse_point]->Class <<endl;
+				cout << setw(15)<< data[ traverse_point ] -> License << setw(15)<< data[traverse_point] -> Mileage << setw(15) <<ReturnClassName(data[traverse_point]->Class) <<endl;
 
         data[ traverse_point ] = NULL;
 				stack_point--;
@@ -38,9 +38,9 @@ void BikeOPs::Inorder(HeapType* currentheap, int callingfunction) //看哪一個
 			else
       {
         if(callingfunction == 1)
-        cout << setw(12) << data[ traverse_point ] ->License << setw(12) << data[ traverse_point ] ->Mileage<< setw(12) << data[ traverse_point ] ->Class <<setw(12)<<data[ traverse_point ] ->Station<<endl;
+        cout << setw(12) << data[ traverse_point ] ->License << setw(12) << data[ traverse_point ] ->Mileage<< setw(12) <<ReturnClassName(data[ traverse_point ] ->Class) <<setw(12)<<ReturnStationName(data[ traverse_point ] ->Station)<<endl;
         else
-        cout << setw(15)<< data[ traverse_point ] -> License << setw(15)<< data[traverse_point] -> Mileage << setw(15) <<data[traverse_point]->Class <<endl;
+        cout << setw(15)<< data[ traverse_point ] -> License << setw(15)<< data[traverse_point] -> Mileage << setw(15) <<ReturnClassName(data[traverse_point]->Class) <<endl;
 
         data[ traverse_point ] = NULL;
 				stack_point--;
@@ -104,6 +104,7 @@ void BikeOPs::StationReport(StationType Stationnum)
   cout<<endl;
   currentheap = currentStation.HRent;
   total = currentheap->currentbikes;
+  Inorder(currentheap, 0);
   for(int i=0;i<60;i++)
   cout<<"=";
   cout<<endl;
@@ -238,6 +239,7 @@ void BikeOPs::UbikeReport()
   for(int i=0;i<60;i++)
   cout<<"=";
   cout<<endl;
+  cout<<setw(60)<<AllBikes->currentbikes<<endl;
 }
 string BikeOPs::ReturnStationName(int Station)
 {
