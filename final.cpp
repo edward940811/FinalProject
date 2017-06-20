@@ -18,6 +18,7 @@ BikePtr BikeOPs::NewBike ( LicenseType License, int Mile, ClassType Class, Stati
     HeapType* stationheap = AllStations[Station].HElectric;
     InsertHeap(newbike,stationheap);
     AllStations[Station].NumElectric++;
+    // newbike->currentStation = Station;
   }
   if(Class == 1)
   {
@@ -44,15 +45,12 @@ BikePtr BikeOPs::SearchBike(LicenseType License)
   int i=1;
   while( AllBikes->Elem[i] != NULL )
   {
-	//cout <<AllBikes->Elem[i]->License << " "<< License << endl;
     if(strcmp(AllBikes->Elem[i]->License,License)==0)
 		return AllBikes->Elem[i];
     else if(compare(AllBikes->Elem[i]->License,License))
 		i *= 2;
     else if(!compare(AllBikes->Elem[i]->License,License))
 		i = i*2 +1;
-	//cout <<"   "<< i << endl;
-	//if( i > 255 ) return NULL;
   }
   return NULL;
 }
@@ -86,7 +84,7 @@ void BikeOPs::InsertHeap(BikePtr newbike, HeapType* currentheap)
     currentheap->numberfortracing *= 2;
     InsertHeap(newbike,currentheap);
   }
-  if(!compare(currentheap->Elem[currentheap->numberfortracing]->License,newbike->License)) // larger
+  else if(!compare(currentheap->Elem[currentheap->numberfortracing]->License,newbike->License)) // larger
   {
     currentheap->numberfortracing = 2 * currentheap->numberfortracing + 1;
     InsertHeap(newbike,currentheap);
@@ -108,17 +106,28 @@ int BikeOPs::JunkBikePtr(BikePtr Bike)
     cout<<"Bike "<< Bike->License <<" is deleted from "<< ReturnStationName(Bike->Station)<< endl;
   }
   int Station = Bike->Station;
+  if(Bike->Status == Rented && Bike->IscalledbyReturn == true)
+  {
+    int j = FindBikeInHeap(AllStations[Station].HRent,Bike);
+    AllStations[Station].HRent->Elem[j] = NULL;
+    AllStations[Station].HRent->currentbikes -= 1;
+    Resort(AllStations[Station].HRent,j);
+    return 0;
+  }
   if(Bike->Class == 0)
   {
-    int j = FindBikeInHeap(AllStations[Station].HElectric,Bike);
+    int j;
+    j = FindBikeInHeap(AllStations[Station].HElectric,Bike);
+
     AllStations[Station].HElectric->Elem[j] = NULL;
     AllStations[Station].HElectric->currentbikes -= 1;
     Resort(AllStations[Station].HElectric,j);
     return 0;
   }
-  if(Bike->Class == 1)
+  if(Bike->Class == 1 )
   {
-    int j = FindBikeInHeap(AllStations[Station].HLady,Bike);
+    int j;
+    j = FindBikeInHeap(AllStations[Station].HLady,Bike);
     AllStations[Station].HLady->Elem[j] = NULL;
     AllStations[Station].HLady->currentbikes -= 1;
     Resort(AllStations[Station].HLady,j);
@@ -126,7 +135,8 @@ int BikeOPs::JunkBikePtr(BikePtr Bike)
   }
   if(Bike->Class == 2)
   {
-    int j = FindBikeInHeap(AllStations[Station].HRoad,Bike);
+    int j;
+    j = FindBikeInHeap(AllStations[Station].HRoad,Bike);
     AllStations[Station].HRoad->Elem[j] = NULL;
     AllStations[Station].HRoad->currentbikes -= 1;
     Resort(AllStations[Station].HRoad,j);
@@ -134,7 +144,8 @@ int BikeOPs::JunkBikePtr(BikePtr Bike)
   }
   if(Bike->Class == 3)
   {
-    int j = FindBikeInHeap(AllStations[Station].HHybrid,Bike);
+    int j;
+    j = FindBikeInHeap(AllStations[Station].HHybrid,Bike);
     AllStations[Station].HHybrid->Elem[j] = NULL;
     AllStations[Station].HHybrid->currentbikes -= 1;
     Resort(AllStations[Station].HHybrid,j);
@@ -155,7 +166,7 @@ void BikeOPs::TransBikePtr (StationType Station, BikePtr Bike)
     return ;
   }
   int Class = Bike->Class;
-  Bike->IscalledbyTrans == true;
+  Bike->IscalledbyTrans = true;
   JunkBikePtr(Bike);
   if(Class == 0)
   {
@@ -168,21 +179,25 @@ void BikeOPs::TransBikePtr (StationType Station, BikePtr Bike)
     HeapType* stationheap = AllStations[Station].HLady;
     InsertHeap(Bike,stationheap);
     AllStations[Station].NumLady++;
+    //AllStations[Station].HLady->currentbikes++;
   }
   if(Class == 2)
   {
     HeapType* stationheap = AllStations[Station].HRoad;
     InsertHeap(Bike,stationheap);
     AllStations[Station].NumRoad++;
+    //AllStations[Station].HRoad->currentbikes++;
   }
   if(Class == 3)
   {
     HeapType* stationheap = AllStations[Station].HHybrid;
     InsertHeap(Bike,stationheap);
     AllStations[Station].NumHybrid++;
+    //AllStations[Station].HHybrid->currentbikes++;
   }
   cout<<"Bike "<<Bike->License <<" is transferred to " << ReturnStationName(Station)<<endl;
-  Bike->IscalledbyTrans == false;
+  Bike->Station = Station;
+  Bike->IscalledbyTrans = false;
 }
 void BikeOPs::RentBikePtr (StationType Station, ClassType Class)
 {
@@ -245,18 +260,19 @@ void BikeOPs::RentBikePtr (StationType Station, ClassType Class)
       Bike = AllStations[Station].HHybrid->Elem[largestBike];
     }
   }
-    Bike->IscalledbyTrans = true;
-    JunkBikePtr(Bike);
-    Bike->Status = Rented;
-    HeapType* stationheap = AllStations[Station].HRent;
-    InsertHeap(Bike,stationheap);
-    cout<<"A bike is rented from "<<ReturnStationName(Station)<<"."<<endl;
+  Bike->IscalledbyTrans = true;
+  JunkBikePtr(Bike);
+  Bike->Status = Rented;
+  Bike->IscalledbyTrans = false;
+  HeapType* stationheap = AllStations[Station].HRent;
+  InsertHeap(Bike,stationheap);
+  cout<<"A bike is rented from "<<ReturnStationName(Station)<<"."<<endl;
 }
 int BikeOPs::FindLargestMileageBikeInHeap(HeapType *heap, int i, int largestBike)
 {
   if(heap->Elem[2*i] != NULL) //left
   {
-    if(heap->Elem[i]->Mileage < heap->Elem[2*i]->Mileage)
+    if(heap->Elem[i]->Mileage <= heap->Elem[2*i]->Mileage)
     {
         largestBike = 2*i;
     }
@@ -265,7 +281,7 @@ int BikeOPs::FindLargestMileageBikeInHeap(HeapType *heap, int i, int largestBike
   }
   if(heap->Elem[2*i+1] != NULL) //right
   {
-    if(heap->Elem[i]->Mileage < heap->Elem[2*i+1]->Mileage)
+    if(heap->Elem[i]->Mileage <= heap->Elem[2*i+1]->Mileage)
     {
         largestBike = 2*i+1;
     }
@@ -337,45 +353,76 @@ void BikeOPs::BReport( void ){
 	}
 }
 */
-int BikeOPs::shortest( StationType Station1, StationType Station2 ){
-	int temp[12];
-	bool finish[12];
-	int count = 1;
-	for( int i = 0; i < 12; i++ ){
-		finish[i] = ( i == Station1 )? false : true;
-		temp[i] = map[Station1][i];
-	}
-	do{
-		for( int i = 0; i < 12; i++ ){
-			if( finish[i] && temp[i] < INT_MAX ){
-				for( int j = 0; j < 12; j++ ){
-					if( ( map[i][j] + temp[i] ) < temp[j] )
-						temp[j] = map[i][j] + temp[i];
-				}
-				count++;
-			}
-		}
-	}while( count != 12 );
+int BikeOPs::shortest( StationType Station1, StationType Station2 )
+{
+  bool visited[12];
+  int dist[12];
+  int count = 1;
+  for (int i=0;i<12;i++)
+  {
+    visited[Station1] = true;
+    if(i != Station1)
+    visited[i] = false;
 
-	return temp[Station2];
+    if(map[Station1][i] != INT_MAX)
+    dist[i] = map[Station1][i];
+    else
+    dist[i] = INT_MAX;
+  }
+  int thispoint = Station1;
+  int shortestVsofar = Station1;
+  while(count!=12)
+  {
+    int shortestDsofar = INT_MAX;
+    for(int i=0;i<12;i++) //這點到下個點的公式
+    {
+      if(map[thispoint][i] != INT_MAX)
+      if(dist[thispoint]+map[thispoint][i] < dist[i] && !visited[i])
+      {
+        dist[i] = dist[thispoint]+map[thispoint][i];
+      }
+      if(dist[i] < shortestDsofar && !visited[i])
+      {
+        shortestVsofar = i;  //最近的點
+        shortestDsofar = dist[i]; //最近的距離
+      }
+    }
+    thispoint = shortestVsofar;
+    visited[thispoint] = true;
+    count++;
+  }
+  // for(int i=0;i<12;i++)
+  // cout<<dist[i]<<endl;
+  return dist[Station2];
 }
 
 int BikeOPs::Returns (StationType Station, BikePtr Bike, int ReturnMile){
+  int ChargeMile = ReturnMile - Bike->Mileage;
 	Bike -> Mileage = ReturnMile;
-	Bike -> Status = Free;
 	int deletednumber = FindBikeInHeap( AllStations[ Bike -> Station ].HRent , Bike );
-	if( deletednumber > -1 ) Resort( AllStations[ Bike -> Station ].HRent , deletednumber);
-	else { cout << "this bike have false identities !! " << endl; }
 	ClassType Class = Bike -> Class;
 	int Station_ = Bike -> Station;
 	int length = shortest( Bike -> Station, Station );
-
+  if( deletednumber != -1 )
+  {
+    Bike->IscalledbyTrans = true;
+    Bike->IscalledbyReturn = true;
+    JunkBikePtr(Bike);
+    Resort(AllStations[ Bike -> Station ].HRent , deletednumber);
+    Bike->IscalledbyTrans = false;
+    Bike->IscalledbyReturn = false;
+    Bike -> Status = Free;
+  }
+  else {
+    cout << "this bike have false identities !! " << endl;
+    return 0;
+  }
 	if(Class == 0)
 	{
 		HeapType* stationheap = AllStations[Station_].HElectric;
 		InsertHeap(Bike,stationheap);
 		AllStations[Station_].NumElectric++;
-		if( ReturnMile > length ){
+		if( ChargeMile > length ){
 			AllStations[ Bike->Station].Net += 40*ReturnMile;
 			AllStations[ Bike->Station].NetElectric += 40*ReturnMile;
 			cout << "Rental charge for this bike is " << 40*ReturnMile << endl;
@@ -389,33 +436,33 @@ int BikeOPs::Returns (StationType Station, BikePtr Bike, int ReturnMile){
 	if(Class == 1)
 	{
 		HeapType* stationheap = AllStations[Station_].HLady;
-		InsertHeap(Bike,stationheap);
 		AllStations[Station_].NumLady++;
-		if( ReturnMile > length ){
-			AllStations[ Bike->Station].Net += 30*ReturnMile;
-			AllStations[ Bike->Station].NetLady += 30*ReturnMile;
-			cout << "Rental charge for this bike is " << 30*ReturnMile << endl;
+		if( ChargeMile > length ){
+			AllStations[ Bike->Station].Net += 30*ChargeMile;
+			AllStations[ Bike->Station].NetLady += 30*ChargeMile;
+			cout << "Rental charge for this bike is " << 30*ChargeMile << endl;
 		}
 		else {
-			AllStations[ Bike->Station].Net += 25*ReturnMile;
-			AllStations[ Bike->Station].NetLady += 25*ReturnMile;
-			cout << "Rental charge for this bike is " << 25*ReturnMile << endl;
+			AllStations[ Bike->Station].Net += 25*ChargeMile;
+			AllStations[ Bike->Station].NetLady += 25*ChargeMile;
+			cout << "Rental charge for this bike is " << 25*ChargeMile << endl;
 		}
+    InsertHeap(Bike,stationheap);
 	}
 	if(Class == 2)
 	{
 		HeapType* stationheap = AllStations[Station_].HRoad;
 		InsertHeap(Bike,stationheap);
 		AllStations[Station_].NumRoad++;
-		if( ReturnMile > length ){
-			AllStations[ Bike->Station].Net += 20*ReturnMile;
-			AllStations[ Bike->Station].NetRoad += 20*ReturnMile;
-			cout << "Rental charge for this bike is " << 20*ReturnMile << endl;
+		if( ChargeMile > length ){
+			AllStations[ Bike->Station].Net += 20*ChargeMile;
+			AllStations[ Bike->Station].NetRoad += 20*ChargeMile;
+			cout << "Rental charge for this bike is " << 20*ChargeMile << endl;
 		}
 		else {
-			AllStations[ Bike->Station].Net += 15*ReturnMile;
-			AllStations[ Bike->Station].NetRoad += 15*ReturnMile;
-			cout << "Rental charge for this bike is " << 15*ReturnMile << endl;
+			AllStations[ Bike->Station].Net += 15*ChargeMile;
+			AllStations[ Bike->Station].NetRoad += 15*ChargeMile;
+			cout << "Rental charge for this bike is " << 15*ChargeMile << endl;
 		}
 	}
 	if(Class == 3)
@@ -423,15 +470,15 @@ int BikeOPs::Returns (StationType Station, BikePtr Bike, int ReturnMile){
 		HeapType* stationheap = AllStations[Station_].HHybrid;
 		InsertHeap(Bike,stationheap);
 		AllStations[Station_].NumHybrid++;
-		if( ReturnMile > length ){
-			AllStations[ Bike->Station].Net += 25*ReturnMile;
-			AllStations[ Bike->Station].NetHybrid += 25*ReturnMile;
-			cout << "Rental charge for this bike is " << 25*ReturnMile << endl;
+		if( ChargeMile > length ){
+			AllStations[ Bike->Station].Net += 25*ChargeMile;
+			AllStations[ Bike->Station].NetHybrid += 25*ChargeMile;
+			cout << "Rental charge for this bike is " << 25*ChargeMile << endl;
 		}
 		else {
-			AllStations[ Bike->Station].Net += 20*ReturnMile;
-			AllStations[ Bike->Station].NetHybrid += 20*ReturnMile;
-			cout << "Rental charge for this bike is " << 20*ReturnMile << endl;
+			AllStations[ Bike->Station].Net += 20*ChargeMile;
+			AllStations[ Bike->Station].NetHybrid += 20*ChargeMile;
+			cout << "Rental charge for this bike is " << 20*ChargeMile << endl;
 		}
 	}
 }

@@ -13,10 +13,10 @@ void BikeOPs::Resort(HeapType* heap ,int deletednumber)
     ResortR(heap,deletednumber);
   }
   //have leftchild
-  if(heap->Elem[2*deletednumber] != NULL)
+  else if(heap->Elem[2*deletednumber] != NULL)
   {
     int i = deletednumber;
-    while(i <= heap->currentbikes)
+    while(1)
     {
       if(heap->Elem[2*i+1] == NULL)
       break;
@@ -39,12 +39,14 @@ void BikeOPs::ResortR(HeapType* heap ,int deletednumber) //調整右子樹用 sh
   if(heap->Elem[2*k] != NULL)
   {
     heap->Elem[2*deletednumber] = heap->Elem[2*k];
-    ResortR(heap,k);
+    //heap->Elem[2*k] = NULL;
+    ResortR(heap,k-1);
   }
   //right
   if(heap->Elem[2*k+1] != NULL)
   {
     heap->Elem[2*deletednumber+1] = heap->Elem[2*k+1];
+    //heap->Elem[2*k+1] = NULL;
     ResortR(heap,k);
   }
 }
@@ -55,9 +57,9 @@ int BikeOPs::FindBikeInHeap(HeapType* heap,BikePtr Bike)
   {
     if(strcmp(heap->Elem[i]->License,Bike->License)==0)
     return i;
-    if(compare(heap->Elem[i]->License,Bike->License))
+    else if(compare(heap->Elem[i]->License,Bike->License))
     i *= 2;
-    if(!compare(heap->Elem[i]->License,Bike->License))
+    else if(!compare(heap->Elem[i]->License,Bike->License))
     i = i*2 +1;
   }
   return -1; // not located

@@ -148,6 +148,22 @@ int main(int argc, char * argv[]) {
 			else
 				a.Returns(station,bike,stoi(mile));
 		}
+		else if(cmd == "Trans" ){
+			string s,lic;
+			testCaseIn >> s >> lic;
+			char temp[5];
+			StationType station = (StationType)a.station_to_int(s);
+			for( int i = 0; i < 5 ; ++i ){
+				temp[i] = lic[i];
+			}
+			temp[5]='\0';
+			BikePtr bike = a.SearchBike( temp );
+			if( bike == NULL ){
+				cout<<"Bike "<< temp <<" does not belong to our company."<<endl;
+			}
+			else
+				a.TransBikePtr(station,bike);
+		}
 		//output something
 		//fileOut << "your output" << endl;
 	}

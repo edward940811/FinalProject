@@ -10,8 +10,10 @@ void BikeOPs::Inorder(HeapType* currentheap, int callingfunction) //看哪一個
 
   int size = currentheap->currentbikes;
   int stack[size];
-  // if (size ==1)
-  // size = 2;
+  if(size < 2 )
+  {
+    size == 2;
+  }
   stack[1] = 1;
   int visited = 0;
   int stack_point = 1;

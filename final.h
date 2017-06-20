@@ -16,6 +16,9 @@ struct BikeType
   StationType Station;
   ClassType Class;
   bool IscalledbyTrans = false;
+  bool IscalledbyRent = false;
+  bool IscalledbyReturn = false;
+  int currentStation;
   BikeType():Mileage(0),Cursor(0){}
    BikeType(LicenseType license, int Mile, ClassType aclass, StationType station)
    {
